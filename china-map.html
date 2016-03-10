@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+
+<body>
+    <div id="main" style="width: 100%;height:600px;"></div>
+    <script src="js/echarts.js" charset="utf-8"></script>
+    <script src="js/jquery.min.js" charset="utf-8"></script>
+    <script>
+    var myChart = echarts.init(document.getElementById('main'));
+    myChart.showLoading();
+
+    $.get('map/json/province/beijing.json', function(geoJson) {
+        echarts.registerMap('beijing', geoJson);
+        myChart.hideLoading();
+        option = {
+            tooltip: {
+                trigger: 'item',
+                formatter: '{b}'
+            },
+            series: [{
+                name: '中国',
+                type: 'map',
+                mapType: 'beijing',
+                selectedMode: 'multiple',
+                label: {
+                    normal: {
+                        show: true
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                }
+            }]
+        };
+        myChart.setOption(option);
+    });
+    </script>
+</body>
+
+</html>
