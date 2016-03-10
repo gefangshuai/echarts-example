@@ -13,7 +13,6 @@
     <script>
     var myChart = echarts.init(document.getElementById('main'));
     myChart.showLoading();
-
     $.get('map/json/china.json', function(geoJson) {
         echarts.registerMap('beijing', geoJson);
         myChart.hideLoading();
