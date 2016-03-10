@@ -6,7 +6,8 @@
     <title></title>
 </head>
 
-<body>
+<body align='center'>
+    <h4>你点击的省份是：<span id="text"></span></h4>
     <div id="main" style="width: 100%;height:600px;"></div>
     <script src="js/echarts.js" charset="utf-8"></script>
     <script src="js/jquery.min.js" charset="utf-8"></script>
@@ -14,7 +15,7 @@
     var myChart = echarts.init(document.getElementById('main'));
     myChart.showLoading();
     $.get('map/json/china.json', function(geoJson) {
-        echarts.registerMap('beijing', geoJson);
+        echarts.registerMap('china', geoJson);
         myChart.hideLoading();
         option = {
             tooltip: {
@@ -24,8 +25,8 @@
             series: [{
                 name: '中国',
                 type: 'map',
-                mapType: 'beijing',
-                selectedMode: 'multiple',
+                mapType: 'china',
+                selectedMode: 'single',
                 label: {
                     normal: {
                         show: true
@@ -33,10 +34,17 @@
                     emphasis: {
                         show: true
                     }
-                }
+                },
+                data: [{
+                    name: '广东',
+                    selected: true
+                }]
             }]
         };
         myChart.setOption(option);
+        myChart.on('mapselectchanged', function(e) {
+            $('#text').text(e.name);
+        });
     });
     </script>
 </body>
